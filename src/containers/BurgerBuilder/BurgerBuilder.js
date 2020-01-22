@@ -5,6 +5,7 @@ import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import Axios from '../../axiosOrder';
+import axios from 'axios';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
@@ -18,16 +19,18 @@ const INGREDIENT_PRICES = {
 
 class BurgerBuilder extends Component {
   state = {
-      ingredients: {
-         salad: 0,
-         bacon: 0,
-         cheese: 0,
-         meat: 0,
-      },
+      ingredients: null,
       totalPrice: 4,
       purchasable: false,
       purchasing: false,
       loading: false
+  }
+
+  componentDidMount() {
+     axios.get('https://react-my-burger-8b57a.firebaseio.com/ingredients')
+     .then(response => {
+         this.setState({ingredients : response.data});
+     })
   }
 
 
@@ -98,7 +101,7 @@ class BurgerBuilder extends Component {
        },
        deliveryMethod: 'fastest'
     }
-    Axios.post('/orders', order)
+    Axios.post('/orders.json', order)
     .then(response => {
       this.setState({loading: false, purchasing: false})
        console.log("response", response);
