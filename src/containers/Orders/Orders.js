@@ -9,6 +9,7 @@ class Orders extends  Component {
     }
 
     componentDidMount() {
+        console.log("Orders props", this.props);
         axios.get('./orders.json')
          .then(res => {
              const fetchOrders = [];
