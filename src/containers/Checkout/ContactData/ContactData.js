@@ -13,6 +13,7 @@ class ContactData  extends Component {
             elementType: 'input',
             elementConfig: {
                 type: 'text',
+                label: 'vinay',
                 placeholder: 'your Name',
             },
             value: '',

@@ -12,7 +12,7 @@ const Input = (props) => {
         inputClasses.push(classes.Invalid)
     }
 
-    switch(props.elementType) {
+    switch(props.elementConfig) {
         case('input'):
          inputElement = <input 
             onChange={props.changed}
