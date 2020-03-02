@@ -41,7 +41,7 @@ class BurgerBuilder extends Component {
       return sum + el;
     }, 0);
      console.log("sum", sum);
-    this.setState({purchasable: sum > 0 });
+    return  sum > 0;
   }
 
   // addIngredientHandler = (type) => {
@@ -87,18 +87,15 @@ class BurgerBuilder extends Component {
 
   PurchaseContinued = () => {
    
-    const queryParams = [];
-    for(let i in this.state.ingredients) {
-        console.log("i in ingredents", i);
-        queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
-    };
-    queryParams.push('price=' + this.state.totalPrice);
-    const queryString = queryParams.join('&');
-    console.log("queryParams", queryParams);
-        this.props.history.push({
-         pathname: '/checkout',
-         search: '?' + queryString
-        });
+    // const queryParams = [];
+    // for(let i in this.state.ingredients) {
+    //     console.log("i in ingredents", i);
+    //     queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
+    // };
+    // queryParams.push('price=' + this.state.totalPrice);
+    // const queryString = queryParams.join('&');
+    // console.log("queryParams", queryParams);
+        this.props.history.push('/checkout');
   }
   render() {
     const disabledInfo = { ...this.props.ings }
@@ -116,7 +113,7 @@ class BurgerBuilder extends Component {
           <BuildControls ingredientAdded={this.props.onIngredientAdded}
           ingredientRemove={this.props.onIngredientRemoved}
           disabled={this.disabledInfo}
-          purchasable={this.state.purchasable}
+          purchasable={this.updatePurchaseState(this.props.ings)}
           ordered= {this.purchaseHandler}
           price={this.props.price} />
         </Aux>
