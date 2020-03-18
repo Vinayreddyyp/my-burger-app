@@ -3,8 +3,10 @@ import Button from '../../../components/UI/Button/Button';
 import classes from './ContactData.css';
 import Axios from '../../../axiosOrder';
 import Spinner from '../../../components/UI/Spinner/Spinner';
-import Input from '../../../components/UI/Input/Input'
+import Input from '../../../components/UI/Input/Input';
 import { connect } from 'react-redux';
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+import * as actions from  '../../../store/actions/index';
 
 class ContactData  extends Component {
    
@@ -102,7 +104,6 @@ class ContactData  extends Component {
          },
         },
         formIsValid: false,
-        loading: false,
 
     };
 
@@ -110,37 +111,45 @@ class ContactData  extends Component {
     orderHandler = (event) => {
         event.preventDefault();
         console.log("order handler triggered", this.props.ingredients);
-        this.setState({loading: true});
          const formData = {};
          for(let formElementIdentifier in this.state.orderForm) {
              formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
          }
          console.log("formdata", formData);
 
-        const order = {
-        Ingredients: this.props.ings,
-        price: this.props.price,
-        orderData: formData,
-        customer: {
-            name: 'vinay',
-            address: {
-            street: 'street1',
-            zipCode: '12344',
-            country: 'anakapalli'
-            },
-            email: 'test@test.com'
-        },
-        deliveryMethod: 'fastest'
-        }
-        console.log("contactData", order);
-        Axios.post('/orders.json', order)
-        .then(response => {
-        this.setState({loading: false})
-        this.props.history.push('/');
-        console.log("response", response);
-        }).catch(error => {
-        this.setState({loading: false});
-        });
+         const order = {
+            Ingredients: this.props.ings,
+            price: this.props.price,
+            orderData: formData,
+         }
+
+         this.props.onOrderBurger(order);
+
+
+        // const order = {
+        // Ingredients: this.props.ings,
+        // price: this.props.price,
+        // orderData: formData,
+        // customer: {
+        //     name: 'vinay',
+        //     address: {
+        //     street: 'street1',
+        //     zipCode: '12344',
+        //     country: 'anakapalli'
+        //     },
+        //     email: 'test@test.com'
+        // },
+        // deliveryMethod: 'fastest'
+        // }
+        // console.log("contactData", order);
+        // Axios.post('/orders.json', order)
+        // .then(response => {
+        // this.setState({loading: false})
+        // this.props.history.push('/');
+        // console.log("response", response);
+        // }).catch(error => {
+        // this.setState({loading: false});
+        // });
     };
 
     checkValidity(value, rules) {
@@ -222,8 +231,15 @@ class ContactData  extends Component {
 const mapStateToProps = state => {
     return {
         ings: state.ingredients,
-        price: state.totalPrice
+        price: state.totalPrice,
+        loading: state.loading,
     }
 }
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = dispatch => {
+     return {
+         onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData)),
+     }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, Axios));
