@@ -62,7 +62,7 @@ class Checkout extends Component {
 
 const mapStateToprops = state => {
     return {
-        ings: state.ingredients,
+        ings: state.burgerBuilder.ingredients,
     }
 }
 
