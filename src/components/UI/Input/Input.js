@@ -5,24 +5,25 @@ const Input = (props) => {
     console.log("props of input", this.props);
     let inputElement = null;
     const inputClasses = [classes.InputElement];
-    console.log("inputClasses", inputClasses);
 
     if(props.invalid && props.shouldValidate && props.touched) {
-        console.log("props invalid", props.touched);
+  
         inputClasses.push(classes.Invalid)
     }
 
-    switch(props.elementConfig) {
+    switch(props.elementType) {
+        
         case('input'):
+        
          inputElement = <input 
-            onChange={props.changed}
+            onChange = {(e) => props.changed(e)}
             className={inputClasses.join(' ')} 
             {...props.elementConfig}
             value={props.value}/>
          break;
          case('textarea'):
             inputElement = <textarea 
-              onChange={props.changed}
+              onChange = {(e) => props.changed(e)}
               className={inputClasses.join(' ')}  
               {...props.elementConfig}
               value={props.value}/>
@@ -43,7 +44,8 @@ const Input = (props) => {
          break;
          default:
              inputElement = <input 
-             className={inputClasses.join('')} 
+             className={inputClasses.join('')}
+            
              {...props.elementConfig}
              value={props.value}/>
     };

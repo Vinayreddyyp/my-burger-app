@@ -29,13 +29,14 @@ export const initIngredinets = () => {
         .then(response => {
             dispatch(setIngredients(response.data));
         }).catch(error => {
-           dispatch(fetchIngredientsFailed())
+           dispatch(fetchIngredientsFailed(error))
         })
     }
 }
 
-export const fetchIngredientsFailed = () => {
+export const fetchIngredientsFailed = (error) => {
     return {
-        type: actionTypes.FETCH_INGREDIENTS_FAILED
+        type: actionTypes.FETCH_INGREDIENTS_FAILED,
+        error: error,
     }
 }

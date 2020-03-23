@@ -117,6 +117,7 @@ class ContactData  extends Component {
          }
          console.log("formdata", formData);
 
+
          const order = {
             Ingredients: this.props.ings,
             price: this.props.price,
@@ -124,7 +125,7 @@ class ContactData  extends Component {
          }
 
          this.props.onOrderBurger(order);
-
+         
 
         // const order = {
         // Ingredients: this.props.ings,
@@ -170,10 +171,10 @@ class ContactData  extends Component {
     }
 
     inputChangedHandler = (event, inputIdentifier) => {
+
       const updatedOrderForm = {
           ...this.state.orderForm
       };
-      console.log("updatedOrderForm", updatedOrderForm);
       const updatedFormElement =  {
           ...updatedOrderForm[inputIdentifier]
       };
@@ -181,8 +182,6 @@ class ContactData  extends Component {
       updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
       updatedFormElement.touched = true;
       updatedOrderForm[inputIdentifier] = updatedFormElement;
-      console.log("updatedFormElement", updatedFormElement );
-      console.log("updatedOrderForm", updatedOrderForm );
 
        let  formIsValid = true;
        for(let inputIdentifier in updatedOrderForm) {
