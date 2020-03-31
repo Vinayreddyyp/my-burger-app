@@ -132,6 +132,7 @@ class BurgerBuilder extends Component {
   }
 }
 const mapStateToProps = state => {
+  debugger;
   return {
     ings: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
@@ -141,6 +142,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   console.log("dispatch action",dispatch);
+  debugger;
   return {
         onIngredientAdded: (ingName) => {
           console.log("igNAme", ingName);
