@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './Input.css'
 
 const Input = (props) => {
-    console.log("props of input", this.props);
+    console.log("props of input", props);
     let inputElement = null;
     const inputClasses = [classes.InputElement];
 
@@ -10,20 +10,21 @@ const Input = (props) => {
   
         inputClasses.push(classes.Invalid)
     }
-
+    
+    console.log("props.elementType", props.elementType);
     switch(props.elementType) {
         
         case('input'):
         
          inputElement = <input 
-            onChange = {(e) => props.changed(e)}
+            onChange = {props.changed}
             className={inputClasses.join(' ')} 
             {...props.elementConfig}
             value={props.value}/>
          break;
          case('textarea'):
             inputElement = <textarea 
-              onChange = {(e) => props.changed(e)}
+              onChange = {props.changed}
               className={inputClasses.join(' ')}  
               {...props.elementConfig}
               value={props.value}/>
@@ -45,7 +46,6 @@ const Input = (props) => {
          default:
              inputElement = <input 
              className={inputClasses.join('')}
-            
              {...props.elementConfig}
              value={props.value}/>
     };

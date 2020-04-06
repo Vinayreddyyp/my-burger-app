@@ -12,13 +12,13 @@ class ContactData  extends Component {
    
     state = {
         orderForm: {
-            name: {
-            elementType: 'input',
-            elementConfig: {
-                type: 'text',
-                label: 'vinay',
-                placeholder: 'your Name',
-            },
+                name: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    label: 'vinay',
+                    placeholder: 'your Name',
+                },
             value: '',
             validation : {
                 required: true,

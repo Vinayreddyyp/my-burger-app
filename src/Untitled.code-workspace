@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": "/Users/vinaykumarreddyyerrapareddy/Desktop/react-workshop-01-react-app-webpack"
+		},
+		{
+			"path": "/Users/vinaykumarreddyyerrapareddy/Desktop/my-search-app"
+		},
+		{
+			"path": "/Users/vinaykumarreddyyerrapareddy/Desktop/my-pagination"
+		},
+		{
+			"path": "/Users/vinaykumarreddyyerrapareddy/Desktop/ReactApps/my-burger-app-master"
+		},
+		{
+			"path": "/Users/vinaykumarreddyyerrapareddy/Desktop/ReactApps/redux--01-start"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "javascript"
+	}
+}
