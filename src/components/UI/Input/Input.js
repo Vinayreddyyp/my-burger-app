@@ -3,10 +3,12 @@ import classes from './Input.css'
 
 const Input = (props) => {
     console.log("props of input", props);
+    console.log("props.invalid ", props.invalid )
     let inputElement = null;
     const inputClasses = [classes.InputElement];
 
     if(props.invalid && props.shouldValidate && props.touched) {
+        debugger;
   
         inputClasses.push(classes.Invalid)
     }
@@ -42,6 +44,8 @@ const Input = (props) => {
               </select>
              
             );
+
+
          break;
          default:
              inputElement = <input 

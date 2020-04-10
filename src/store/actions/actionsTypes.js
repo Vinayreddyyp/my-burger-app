@@ -9,5 +9,9 @@ export const PURCHASE_INIT = 'PURCHASE_INIT';
 export const FETCH_ORDER_START = 'FEATCH_ORDER_START';
 export const FETCH_ORDER_SUCESS = 'FETCH_ORDER_SUCESS';
 export const FETCH_ORDER_FAIL = 'FETCH_ORDER_FAIL';
+export const AUTH_START = 'AUTH_START';
+export const AUTH_SUCCESS = 'AUTH_SCUSSESS';
+export const AUTH_FAIL = 'AUTH_FAIL';   
+
 
 
