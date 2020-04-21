@@ -12,4 +12,6 @@ export {
 
 export {
     auth,
+    logout,
+    setRedirect,
 } from './auth'

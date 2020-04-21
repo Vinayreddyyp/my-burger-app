@@ -22,6 +22,21 @@ export const authFail = (error) => {
     }      
 }
 
+export const logout  = () => {
+    return {
+        type: actionTypes.AUTH_LOG_OUT
+    }
+}
+
+
+export const authCheckout = (checkInTime) => {
+    return dispatch => {
+        setTimeout(() => {
+           dispatch(logout())
+        }, checkInTime * 1000)
+    }
+}
+
 
 export const auth = (email,password, isSignUp) => {
 
@@ -39,8 +54,12 @@ export const auth = (email,password, isSignUp) => {
         }
         axios.post(Url, authObj)
         .then(response => {
-            console.log("response of auth", response)
-            dispatch(authSuccess(response.data.idToken, response.data.localId))
+            console.log("response of auth", response);
+            const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
+            localStorage.setItem('token', response.data.idToken);
+            localStorage.setItem('expirationDate', expirationDate);
+            dispatch(authSuccess(response.data.idToken, response.data.localId));
+            dispatch(authCheckout(response.data.expiresIn));
         })
             
          .catch(err => {
@@ -48,5 +67,13 @@ export const auth = (email,password, isSignUp) => {
              dispatch(authFail(err.response.data.error))
          })
        
+    }
+}
+
+export const setRedirect = (path) => {
+    console.log("jpath of setRedirect", path);
+    return {
+        type: actionTypes.AUTH_REDIRECT,
+        path: path,
     }
 }

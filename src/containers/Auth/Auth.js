@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import classes from './Auth.css';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import * as actions from '../../store/actions/index';
-import Spinner from '../UI/Spinner/Spinner';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 class Auth extends Component {
     state = {
@@ -48,7 +49,14 @@ class Auth extends Component {
     };
 
 
+componentDidMount() {
+  console.log("this.props.building", this.props.building);
+  console.log("this.props.authRedirect", this.props.authRedirect);
+    if(!this.props.building && this.props.authRedirect !== '/') {
+        this.props.onSetAuthRedirect();
+    }
 
+}
 
 checkValidity(value, rules) {
     let isValid = true;
@@ -170,12 +178,18 @@ switchAuthHandler = () => {
            )
         }
 
+        let authRedirect = null;
+        if(this.props.authentication) {
+            authRedirect = <Redirect to={this.props.authRedirect}/>
+        }
+
 
 
         return (
             <div className= {classes.Auth}>
-                <form onSubmit= {this.onSubmitHandler}>
-                    {errorMessage}
+                {authRedirect}
+                {errorMessage}
+                <form onSubmit= {this.onSubmitHandler}>  
                 {form}
                 <Button btnType="Success" disable={!this.state.formIsValid}>SUBMit</Button>
                 <Button btnType="Danger" clicked={this.switchAuthHandler}>
@@ -189,12 +203,16 @@ switchAuthHandler = () => {
 const mapStateToProps = state => {
     return {
         loading: state.auth.loading,
-        error: state.auth.error
+        error: state.auth.error,
+        building: state.burgerBuilder.building,
+        authRedirect: state.auth.authRedirect,
+        authentication: state.auth.idToken !==null,
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email,password, isSignup) => dispatch(actions.auth(email,password, isSignup))
+        onAuth: (email,password, isSignup) => dispatch(actions.auth(email,password, isSignup)),
+        onSetAuthRedirect: () => dispatch(actions.setRedirect('/')),
     }
 
 }

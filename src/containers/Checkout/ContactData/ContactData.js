@@ -31,17 +31,16 @@ class ContactData  extends Component {
         email: {
             elementType: 'input',
             elementConfig: {
-                type: 'text',
-                placeholder: 'your email',
+                type: 'email',
+                placeholder: 'Mail Address'
             },
             value: '',
-            validation : {
+            validation: {
                 required: true,
-                minLength: 5,
-                maxLength: 5,
+                isEmail: true
             },
             valid: false,
-            touched: false,
+            touched: false
         },
         address: {
             elementType: 'input',
@@ -124,7 +123,7 @@ class ContactData  extends Component {
             orderData: formData,
          }
 
-         this.props.onOrderBurger(order);
+         this.props.onOrderBurger(order, this.props.token);
          
 
         // const order = {
@@ -192,6 +191,7 @@ class ContactData  extends Component {
     }
 
      render () {
+         const { orderForm } = this.state;
          const formElementArray = [];
          for(let key in this.state.orderForm) {
                formElementArray.push({
@@ -214,14 +214,25 @@ class ContactData  extends Component {
             <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button>
           </form>
          )
-         if(this.props.loading) {
+         if(this.state.order) {
              form = <Spinner/>;
+         }
+
+         let newComp = null;
+
+         if(orderForm.deliveryMethod.elementConfig.options[0].value === 'fast') {
+            newComp = (
+                <div>
+                    <Spinner/>
+                </div>
+            )
          }
 
          return (
              <div className={classes.ContactData}>
               <h4>Enter your contact data</h4>
               {form}
+              {newComp}
              </div>
          )
        }
@@ -232,12 +243,13 @@ const mapStateToProps = state => {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
         loading: state.order.loading,
+        token: state.auth.idToken
     }
 }
 
 const mapDispatchToProps = dispatch => {
      return {
-         onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData)),
+         onOrderBurger: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token)),
      }
 }
 

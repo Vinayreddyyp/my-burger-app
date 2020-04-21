@@ -9,7 +9,7 @@ import Axios from '../../axiosOrder';
 // import axios from 'axios';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-import * as burgerBuilderActions from '../../store/actions/index';
+import * as actions from '../../store/actions/index';
 // import { initIngredinets } from '../../store/actions/burgerBuilder';
 
 
@@ -68,7 +68,13 @@ class BurgerBuilder extends Component {
   // }
 
   purchaseHandler = () => {
-     this.setState({ purchasing : true});
+    if(this.props.isAuthenticated) {
+      this.setState({ purchasing : true});
+    } else {
+      this.props.onRedirectPath('/checkout');
+      this.props.history.push('/auth');
+    }
+  
   }
   purchaseCancelHandler = () => {
       this.setState({ purchasing: false });
@@ -108,6 +114,7 @@ class BurgerBuilder extends Component {
           disabled={this.disabledInfo}
           purchasable={this.updatePurchaseState(this.props.ings)}
           ordered= {this.purchaseHandler}
+          isAuth = {this.props.isAuthenticated}
           price={this.props.price} />
         </Aux>
         );
@@ -137,6 +144,7 @@ const mapStateToProps = state => {
     ings: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
     error: state.burgerBuilder.error,
+    isAuthenticated : state.auth.idToken !== null,
   }
 }
 
@@ -144,12 +152,10 @@ const mapDispatchToProps = dispatch => {
   console.log("dispatch action",dispatch);
   debugger;
   return {
-        onIngredientAdded: (ingName) => {
-          console.log("igNAme", ingName);
-      return dispatch(burgerBuilderActions.addIngredient(ingName));
-    },
-        onIngredientRemoved: (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName)),
-        onInitIngredients: () => dispatch(burgerBuilderActions.initIngredinets())
+    onIngredientAdded: (ingName) => dispatch(actions.addIngredient(ingName)),
+    onIngredientRemoved: (ingName) => dispatch(actions.removeIngredient(ingName)),
+    onInitIngredients: () => dispatch(actions.initIngredinets()),
+    onRedirectPath: (path) => dispatch(actions.setRedirect(path))
   }
 }
 
