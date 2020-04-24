@@ -20,7 +20,6 @@ const authSuccess = (state, action) => {
         userId: action.userId,
         error: null,
         loading: false,
-
     })
 }
 
@@ -29,7 +28,7 @@ const authFail = (state, action) => {
 }
 
 const authLogout = (state, action) => {
-    return updateObject(state, {error: null, loading: false,idToken: null,userId: null})
+    return updateObject(state, {error: null, loading: false, idToken: null,userId: null})
 }
 
 const setAuthRedirect = (state, action) => {
