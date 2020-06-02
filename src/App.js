@@ -18,9 +18,9 @@ class App extends Component {
      
       let route = (
           <Switch>
-            <Route path= '/checkout' component={Checkout}/>
+            <Route path="/auth" component={Auth} />
             <Route path="/" exact component={BurgerBuilder} />
-            <Redirect path="/" />
+            <Redirect to="/"/>
           </Switch> 
       )
 
@@ -28,9 +28,10 @@ class App extends Component {
         route = (
           <Switch>
             <Route path="/orders" component={Orders}/>
-            <Route path="/auth" component={Auth} />
+            <Route path= '/checkout' component={Checkout}/>
             <Route path='/logout' component={LogOut} />
-            <Redirect path="/" />
+            <Route path="/" exact component={BurgerBuilder} />
+            <Redirect to="/"/>
           </Switch> 
         )
       }

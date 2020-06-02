@@ -8,8 +8,6 @@ const Input = (props) => {
     const inputClasses = [classes.InputElement];
 
     if(props.invalid && props.shouldValidate && props.touched) {
-        debugger;
-  
         inputClasses.push(classes.Invalid)
     }
     
